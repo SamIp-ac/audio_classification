@@ -10,6 +10,8 @@ WORKDIR  /audio_classification-api
 
 COPY . .
 
+RUN apt-get update -y && apt-get install -y --no-install-recommends build-essential gcc libsndfile1
+RUN apt-get update -y && apt-get install -y --no-install-recommends build-essential gcc fluidsynth
 #
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 

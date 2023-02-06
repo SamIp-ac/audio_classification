@@ -1,7 +1,7 @@
 altair==4.2.0
 pandas==1.5.1
 tensorflow==2.11.0 # using tensorflow-macos==2.11.0 for mac when doing pip3 install
-protobuf==4.21.12 # protobuf==3.20.0 ==3.19.0
+protobuf==3.19.0 # protobuf==3.20.0 ==3.19.0
 scikit-learn==1.2.0
 librosa===0.9.2
 numpy==1.23.5
