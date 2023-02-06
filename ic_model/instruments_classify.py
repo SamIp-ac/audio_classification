@@ -1,9 +1,5 @@
-import os
-
 import numpy as np
 import soundfile as sf
-
-import matplotlib.pyplot as plt
 
 from ic_model import params as yamnet_params
 from ic_model import yamnet as yamnet_model

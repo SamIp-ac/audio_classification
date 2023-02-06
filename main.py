@@ -1,16 +1,49 @@
-# This is a sample Python script.
+import numpy as np
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from ic_model import instruments_classify as ic
+import os
+from uvicorn import run
+from pydantic import BaseModel, Field
+from typing import Optional, List
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+
+class inst_pred(BaseModel):
+    url: Optional[str] = None
+    inst_pred: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+        extra = "allow"
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+app = FastAPI()
+
+origins = ["*"]
+methods = ["*"]
+headers = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=methods,
+    allow_headers=headers
+)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the mxl to instruments classification API with pydantic!!!"}
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+@app.post("/net/inst_classify")
+async def inst_classify(param: inst_pred):
+    param.audio_pred = ic.inst_classifier(url=param.url)
+    param.inst_pred = ic.predict_inst(param.audio_pred)
+
+    return {'audio prediction': param.audio_pred, 'instrument prediction': param.inst_pred}
+
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 8080))
+    run(app, host="0.0.0.0", port=port)

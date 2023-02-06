@@ -4,9 +4,9 @@ ENV export DOCKER_DEFAULT_PLATFORM=linux/amd64
 # Maintainer info
 LABEL maintainer="i60996395@gmail.com"
 # New work dir
-RUN  mkdir -p  /Restful_api_AirMusic
+RUN  mkdir -p  /audio_classification-api
 
-WORKDIR  /Restful_api_mxl2wav
+WORKDIR  /audio_classification-api
 
 COPY . .
 
