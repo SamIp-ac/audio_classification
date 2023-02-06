@@ -9,8 +9,8 @@ from typing import Optional, List
 
 
 class inst_pred(BaseModel):
-    url: Optional[str] = None
-    inst_pred: Optional[str] = None
+    url: Optional[str]
+    inst_pred: Optional[str]
 
     class Config:
         orm_mode = True
@@ -37,7 +37,7 @@ async def root():
     return {"message": "Welcome to the mxl to instruments classification API with pydantic!!!"}
 
 
-@app.post("/net/inst_classify")
+@app.post("/net/inst_classify/")
 async def inst_classify(param: inst_pred):
     param.audio_pred = ic.inst_classifier(url=param.url)
     param.inst_pred = ic.predict_inst(param.audio_pred)
